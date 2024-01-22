@@ -46,7 +46,7 @@ void selection_sort(int *array, size_t size)
 				/* latch = true; */
 			}
 		}
-		if (min_pos != i + 1)
+		if (min_pos != i)
 		{
 			swap_ints(&array[i], &array[min_pos]);
 			print_array(array, size);
