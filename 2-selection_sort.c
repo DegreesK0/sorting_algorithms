@@ -26,25 +26,31 @@ void swap_ints(int *a, int *b)
 
 void selection_sort(int *array, size_t size)
 {
-	size_t i, j;
-	int min, min_pos;
+	size_t i, j, min_pos = 0;
+	/* bool latch = true; */
 
 	if (array == NULL || size < 2)
 		return;
 
-	for (i = 0; i <= size - 1; i++)
+	for (i = 0; i <= size - 1 /* && latch == true*/; i++)
 	{
-		min = array[i];
+		/* min = array[i]; */
 		min_pos = i;
+		/* latch = false; */
 		for (j = i; j <= size - 1; j++)
 		{
-			if (array[j] < min)
+			if (array[j] < array[min_pos])
 			{
-				min = array[j];
+				/* min = array[j]; */
 				min_pos = j;
+				/* latch = true; */
 			}
+
 		}
-		swap_ints(&array[i], &array[min_pos]);
-		print_array(array, size);
+		if (min_pos != i + 1)
+		{
+			swap_ints(&array[i], &array[min_pos]);
+			print_array(array, size);
+		}
 	}
 }
