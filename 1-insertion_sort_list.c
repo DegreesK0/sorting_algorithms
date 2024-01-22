@@ -3,75 +3,49 @@
 #include "sort.h"
 
 /**
- * create_listint - Creates a doubly linked list from an array of integers
- *
- * @array: Array to convert to a doubly linked list
- * @size: Size of the array
- *
- * Return: Pointer to the first element of the created list. NULL on failure
+ * swap - Swap two datas.
+ * @head: A pointer to the head.
+ * @data1: A pointer to the first element to swap.
+ * @data2: The second element to swap.
+ * Return: void
  */
-listint_t *create_list(const int *array, size_t size)
+void swap(listint_t **head, listint_t **data1, listint_t *data2)
 {
-	listint_t *list;
-	listint_t *node;
-	int *tmp;
-
-	list = NULL;
-	while (size--)
-	{
-		node = malloc(sizeof(*node));
-		if (!node)
-			return (NULL);
-		tmp = (int *)&node->n;
-		*tmp = array[size];
-		node->next = list;
-		node->prev = NULL;
-		list = node;
-		if (list->next)
-			list->next->prev = list;
-	}
-	return (list);
+	(*data1)->next = data2->next;
+	if (data2->next != NULL)
+		data2->next->prev = *data1;
+	data2->prev = (*data1)->prev;
+	data2->next = *data1;
+	if ((*data1)->prev != NULL)
+		(*data1)->prev->next = data2;
+	else
+		*head = data2;
+	(*data1)->prev = data2;
+	*data1 = data2->prev;
 }
 
 /**
- * insertion_sort_list - insetion sort function
- *
- * @list: list of items
+ * insertion_sort_list - Sorts a doubly linked list
+ * using the insertion sort algorithm.
+ * @list: A pointer to the head.
  *
  * Return: void
  */
 void insertion_sort_list(listint_t **list)
 {
-	int count = 0;
-	int i, key, j;
-	listint_t *data = *list;
-	int *array;
+	listint_t *tmp, *cur, *insert;
 
-	while (data != NULL)
+	if (list == NULL || *list == NULL || (*list)->next == NULL)
+		return;
+
+	for (cur = (*list)->next; cur != NULL; cur = tmp)
 	{
-		count++;
-		data = data->next;
-	}
-	array = (int *)malloc(count * sizeof(int));
-	data = *list;
-	for (i = 0; i < count; i++)
-	{
-		array[i] = data->n;
-		data = data->next;
-	}
-	for (i = 1; i < count; i++)
-	{
-		key = array[i];
-		j = i - 1;
-		while (j >= 0 && array[j] > key)
+		insert = cur->prev;
+		tmp = cur->next;
+		while (insert != NULL && cur->n < insert->n)
 		{
-			array[j + 1] = array[j];
-			j = j - 1;
+			swap(list, &insert, cur);
+			print_list(*list);
 		}
-		array[j + 1] = key;
-		data = create_list(array, count);
-		*list = data;
-		print_list(*list);
 	}
-	free(array);
 }
