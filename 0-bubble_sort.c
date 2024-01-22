@@ -26,12 +26,13 @@ void swap_ints(int *a, int *b)
 
 void bubble_sort(int *array, size_t size)
 {
-	size_t i, j;
+	size_t i, j, len = size;
+	size_t base = 1;
 
 	if (array == NULL || size < 2)
 		return;
 
-	for (i = 0; i <= size - 1; i++)
+	for (i = 0; i <= len - 1; i++)
 	{
 		/* for (j = 0; j <= size - i - 1; j++) */
 		/* { */
@@ -42,7 +43,7 @@ void bubble_sort(int *array, size_t size)
 		/*	} */
 		/* } */
 
-		for (j = size - 1; j >= 1; j--)
+		for (j = len - 1; j >= base; j--)
 		{
 			if (array[j - 1] > array[j])
 			{
@@ -50,5 +51,6 @@ void bubble_sort(int *array, size_t size)
 				print_array(array, size);
 			}
 		}
+		base++;
 	}
 }
