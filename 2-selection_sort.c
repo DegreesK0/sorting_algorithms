@@ -45,7 +45,6 @@ void selection_sort(int *array, size_t size)
 				min_pos = j;
 				/* latch = true; */
 			}
-
 		}
 		if (min_pos != i + 1)
 		{
