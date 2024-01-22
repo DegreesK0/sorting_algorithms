@@ -41,7 +41,7 @@ void bubble_sort(int *array, size_t size)
 				print_array(array, size);
 			}
 		}
-		len--;
+		/* len--; */
 
 		/*for (j = size - 1; j >= 1; j--) */
 		/*{ */
